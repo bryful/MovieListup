@@ -106,11 +106,13 @@ namespace MovieListup
 		/// <param name="cmd"></param>
 		public void GetCommand(string[] cmd)
 		{
+			listBox1.Items.Clear();
 			if (cmd.Length > 0)
 			{
 				foreach (string s in cmd)
 				{
-					//listBox1.Items.Add(s);
+					MovieInfo mi = new MovieInfo(s);
+					listBox1.Items.Add(mi.InfoStr());
 				}
 			}
 		}

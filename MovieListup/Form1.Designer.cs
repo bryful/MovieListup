@@ -43,6 +43,7 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.movieListGrid1 = new MovieListup.MovieListGrid();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -57,7 +58,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(865, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(878, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -120,9 +121,9 @@
 			// 
 			// statusStrip1
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 542);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 776);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(865, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(878, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -134,7 +135,7 @@
             this.toolStripButton3});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(865, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(878, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -162,6 +163,15 @@
 			this.toolStripButton3.Size = new System.Drawing.Size(114, 22);
 			this.toolStripButton3.Text = "toolStripButton3";
 			// 
+			// listBox1
+			// 
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.ItemHeight = 12;
+			this.listBox1.Location = new System.Drawing.Point(87, 354);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(724, 400);
+			this.listBox1.TabIndex = 4;
+			// 
 			// movieListGrid1
 			// 
 			this.movieListGrid1.AllowUserToAddRows = false;
@@ -170,7 +180,7 @@
 			this.movieListGrid1.Location = new System.Drawing.Point(25, 81);
 			this.movieListGrid1.Name = "movieListGrid1";
 			this.movieListGrid1.RowTemplate.Height = 21;
-			this.movieListGrid1.Size = new System.Drawing.Size(800, 146);
+			this.movieListGrid1.Size = new System.Drawing.Size(819, 243);
 			this.movieListGrid1.TabIndex = 3;
 			// 
 			// Form1
@@ -178,7 +188,8 @@
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(865, 564);
+			this.ClientSize = new System.Drawing.Size(878, 798);
+			this.Controls.Add(this.listBox1);
 			this.Controls.Add(this.movieListGrid1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.statusStrip1);
@@ -217,6 +228,7 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripButton toolStripButton3;
 		private MovieListGrid movieListGrid1;
+		private System.Windows.Forms.ListBox listBox1;
 	}
 }
 
