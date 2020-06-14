@@ -37,8 +37,20 @@ namespace BRY
 		dynamic json = new DynamicJson();
 		public JsonPref(string appName = "")
 		{
+
 			if (appName == "") appName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
-			_filePath = Path.Combine(Application.UserAppDataPath, appName + ".json");
+			string ppp = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			_filePath = Path.Combine(PrefDir(), appName + ".json");
+
+			//MessageBox.Show(_filePath);
+		}
+			//----------------------------------------------------------------
+		static public string PrefDir()
+		{
+			string ppp = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			ppp = Path.Combine(ppp, "bry-ful\\MovieListup");
+			if (Directory.Exists(ppp)==false)  Directory.CreateDirectory(ppp);
+			return ppp;
 		}
 		public override string ToString()
 		{
