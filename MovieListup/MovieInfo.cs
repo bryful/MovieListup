@@ -44,11 +44,20 @@ namespace MovieListup
 		private long m_FileSize = 0;
 		public long FileSize { get { return m_FileSize; } }
 		public string Comment = "";
+		private int m_BoldCount = 8;
+		public int BoldCount
+		{
+			get { return m_BoldCount; }
+			set
+			{
+				m_BoldCount = value;
+				if (m_BoldCount < 0) m_BoldCount = 0;
+			}
+		}
 		// ********************************************
 		public MovieInfo(string p = "")
 		{
-			Init();
-			if (p!="") SetFilePath(p);
+			if (p != "") SetFilePath(p); else Init();
 		}
 		// ********************************************
 		public void Init()
@@ -64,44 +73,80 @@ namespace MovieListup
 			Comment = "";
 		}
 		// ********************************************
-		private byte [] GetByteData(string p ,long sz,long start = 0)
+		public enum DATAPOS
+		{
+			/// <summary>
+			/// ファイルの先頭
+			/// </summary>
+			TOP =0,
+			/// <summary>
+			/// ファイルの末尾
+			/// </summary>
+			END
+		}
+		// ********************************************
+		/// <summary>
+		/// ファイルの先頭、或いは末尾を指定サイズ読み込む
+		/// </summary>
+		/// <param name="p">ファイルのパス</param>
+		/// <param name="sz">読み込むサイズ</param>
+		/// <param name="dp">読み込み位置</param>
+		/// <returns>読み込んだbyte配列</returns>
+		private byte [] GetByteData(string p ,long sz,DATAPOS dp = DATAPOS.TOP)
 		{
 			byte[] ret = new byte[0];
 			if (File.Exists(p) == false) return ret;
 			FileStream fs = new System.IO.FileStream(p,FileMode.Open,FileAccess.Read);
+			//ファイルサイズと読み込みサイズのチェック。
+			if (sz > fs.Length) sz = fs.Length;
+
 			ret = new byte[sz];
+			int rs = 0;
 			try
 			{
-				int rs = fs.Read(ret, (int)start, (int)sz);
-				if (rs != sz)
+				if (dp == DATAPOS.TOP)
 				{
-					ret = new byte[0];
+					fs.Seek(0, SeekOrigin.Begin);
 				}
-			}
-			catch
-			{
-				ret = new byte[0];
+				else
+				{
+					fs.Seek(-sz, SeekOrigin.End);
+				}
+				rs = fs.Read(ret, 0, (int)sz);
+				
 			}
 			finally
 			{
 				fs.Close();
 			}
+			//読み込みサイズでエラーチェック
+			if (rs != sz)
+			{
+				
+				ret = new byte[0];
+			}
 			return ret;
 		}
 		// ********************************************
+		/// <summary>
+		/// していたバイト配列から文字列を探す
+		/// </summary>
+		/// <param name="h">対象のbyte配列</param>
+		/// <param name="tag">探す文字列</param>
+		/// <returns>見つけた位置、見つからなかったら-1</returns>
 		private long FindByteData(byte [] h,string tag)
 		{
 			long ret = -1;
 			if (h.Length <= 0) return ret;
 			if (tag.Length <= 0) return ret;
 			byte[] tagB = System.Text.Encoding.ASCII.GetBytes(tag);
-			int v = tagB.Length;
+			long v = tagB.Length;
 			if (v > 4) v = 4;
-			int cnt = h.Length - v;
-			for ( int i = 0; i<cnt; i++)
+			long cnt = h.Length - v;
+			for ( long i = 0; i<cnt; i++)
 			{
 				bool b = true;
-				for ( int j=0; j < v;j++)
+				for ( long j=0; j < v;j++)
 				{
 					if( h[i+j] != tagB[j])
 					{
@@ -119,6 +164,11 @@ namespace MovieListup
 			return ret;
 		}
 		// ********************************************
+		/// <summary>
+		/// ファイルのヘッダーを読んでムービーファイルの種類を識別
+		/// </summary>
+		/// <param name="p">ムービーファイルのパス</param>
+		/// <returns>ムービーの種類</returns>
 		private MOVIE_TYPE GetHeader(string p)
 		{
 			 MOVIE_TYPE ret = MOVIE_TYPE.OTHER;
@@ -126,7 +176,6 @@ namespace MovieListup
 			byte[] bs = GetByteData(p, 16, 0);
 			if (bs.Length <= 0) return ret;
 
-			FileStream fs = new System.IO.FileStream(p,FileMode.Open,FileAccess.Read);
 			if ((bs[0]==0x52)&&(bs[1]==0x49)&&(bs[2]==0x46)&&(bs[3]==0x46) // 52 49 46 46
 				&&(bs[8]==0x41)&&(bs[9]==0x56)&&(bs[10]==0x49)&&(bs[11]==0x20) ) //41 56 49 20
 			{
@@ -145,6 +194,11 @@ namespace MovieListup
 			return ret;
 		}
 		// ********************************************
+		/// <summary>
+		/// ムービーファイルを読み込んでいろいろ調べる
+		/// </summary>
+		/// <param name="p">ムービーのパス</param>
+		/// <returns>対象のムービーだったらtrue</returns>
 		public bool SetFilePath(string p)
 		{
 			bool ret = false;
@@ -160,22 +214,29 @@ namespace MovieListup
 			switch (m_MOVIE_TYPE)
 			{
 				case MOVIE_TYPE.AVI:
-					GetStatusAVI();
-					ret = true;
+					ret =GetStatusAVI();
 					break;
 				case MOVIE_TYPE.QT:
 				case MOVIE_TYPE.MP4:
-					GetStatusQT();
-					ret = true;
+					ret = GetStatusQT();
 					break;
+			}
+			if(ret== false)
+			{
+				Init();
 			}
 			return ret;
 		}
 		// ********************************************
-		private void GetStatusAVI()
+		/// <summary>
+		/// m_FilePathのAVIファイルの情報を獲得
+		/// </summary>
+		/// <returns></returns>
+		private bool GetStatusAVI()
 		{
+			bool ret = false;
 			byte[] h = GetByteData(m_FilePath, 0x50, 0);
-			if (h.Length <= 0) return;
+			if (h.Length <= 0) return ret;
 			m_Width         = ((int)h[0x40]) + ((int)h[0x41] << 8) + ((int)h[0x42] << 16) + (int)(h[0x43] << 24);
 			m_Height        = ((int)h[0x44]) + ((int)h[0x45] << 8) + ((int)h[0x46] << 16) + ((int)h[0x47] << 24);
 			m_FrameCount    = (h[0x30]) + (h[0x31] << 8) + (h[0x32] << 16) + (h[0x33] << 24);
@@ -187,24 +248,37 @@ namespace MovieListup
 				fr  = (double)tmp / 1000;
 				m_FrameRate     = fr;
 			}
+			else
+			{
+				return ret;
+			}
 			int frv = (int)(m_FrameRate + 0.5);
 			m_Duration = (double)m_FrameCount /(double)frv;
+			ret = true;
+			return ret;
 		}
 		// ********************************************
-		private void GetStatusQT()
+		// ********************************************
+		/// <summary>
+		/// m_FilePathのQuickTime/mp4ファイルの情報を獲得
+		/// </summary>
+		/// <returns></returns>
+		private bool GetStatusQT()
 		{
-			int sz = 1024 * 30;
-			//まず頭
-			byte[] h = GetByteData(m_FilePath, sz);
+			bool ret = false;
+			long sz = 1024 * 100;
+			//まずファイル末を調べる
+
+			byte[] h = GetByteData(m_FilePath, sz, DATAPOS.END);
+
 			long idx = -1;
 			idx = FindByteData(h, "moov");
 			if (idx < 0)
 			{
-				long v = m_FileSize - sz;
-				if (v < 0) v = 0;
-				h = GetByteData(m_FilePath, sz, v);
+				//見つからなかった先頭を調べる
+				h = GetByteData(m_FilePath, sz, DATAPOS.TOP);
 				idx = FindByteData(h, "moov");
-				if (idx < 0) return;
+				if (idx < 0) return ret;
 			}
 			idx = FindByteData(h, "tkhd");
 
@@ -237,6 +311,12 @@ namespace MovieListup
 					else if ((m_FrameRate > 23.96) && (m_FrameRate < 23.98))
 					{
 						m_FrameRate = 23.976;
+					}else if((m_FrameRate > 23.99) && (m_FrameRate < 24.01))
+					{
+						m_FrameRate = 24;
+					}else if((m_FrameRate > 29.96) && (m_FrameRate < 30.01))
+					{
+						m_FrameRate = 30;
 					}
 
 
@@ -245,6 +325,8 @@ namespace MovieListup
 					m_Duration = (double)m_FrameCount / (double)frv;
 				}
 			}
+			ret = true;
+			return ret;
 		}
 		public string InfoStr()
 		{
@@ -256,6 +338,63 @@ namespace MovieListup
 				m_FrameCount,
 				m_FileSize
 				);
+		}
+		public string SizeInfoStr
+		{
+			get
+			{
+				return String.Format("{0}x{1}", m_Width, m_Height);
+			}
+
+		}
+		public string FrameRateInfoStr
+		{
+			get
+			{
+				return String.Format("{0} fps", m_FrameRate);
+			}
+
+		}
+		public string DurationInfoStr
+		{
+			get
+			{
+				int fps = (int)(m_FrameRate + 0.5);
+				int frm = m_FrameCount - m_BoldCount;
+				int sec = frm / fps;
+				int koma  = m_FrameCount % fps;
+				return String.Format("{0:D2}+{1:D2} ({2})", sec,koma,frm);
+			}
+
+		}
+		public string FileSizeInfoStr
+		{
+			get
+			{
+				string ret = "";
+				if (m_FileSize > 1024 * 1024 * 1024)
+				{
+					double gg = (double)m_FileSize / (1024 * 1024 * 1024);
+					ret = String.Format("{0:#.0}Gbyte", gg);
+				}
+				else if (m_FileSize > 1024 * 1024)
+				{
+					double mm = (double)m_FileSize / (1024 * 1024);
+					ret = String.Format("{0:#.0}Mbyte", mm);
+				}
+				else if (m_FileSize > 1024)
+				{
+					double kk = (double)m_FileSize / 1024;
+					ret = String.Format("{0:#.0}Kbyte", kk);
+				}
+				else 
+				{
+					ret = String.Format("{0}Byte", m_FileSize);
+				}
+
+				return ret;
+			}
+
 		}
 	}
 }

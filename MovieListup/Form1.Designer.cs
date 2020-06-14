@@ -38,16 +38,21 @@
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.movieListGrid1 = new MovieListup.MovieListGrid();
+			this.label2 = new System.Windows.Forms.Label();
+			this.numBold = new System.Windows.Forms.NumericUpDown();
+			this.tbInfo = new System.Windows.Forms.TextBox();
+			this.printInfoPanel1 = new MovieListup.PrintInfoPanel();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numBold)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -58,7 +63,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(878, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(753, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -119,14 +124,6 @@
 			this.aboutToolStripMenuItem.Text = "バージョン情報の表示";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
-			// statusStrip1
-			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 776);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(878, 22);
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip1";
-			// 
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -135,7 +132,7 @@
             this.toolStripButton3});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(878, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(753, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -163,49 +160,113 @@
 			this.toolStripButton3.Size = new System.Drawing.Size(114, 22);
 			this.toolStripButton3.Text = "toolStripButton3";
 			// 
-			// listBox1
+			// label1
 			// 
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(87, 354);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(724, 400);
-			this.listBox1.TabIndex = 4;
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(13, 53);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(35, 12);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "label1";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox1.Location = new System.Drawing.Point(67, 50);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(674, 19);
+			this.textBox1.TabIndex = 5;
 			// 
 			// movieListGrid1
 			// 
+			this.movieListGrid1.AllowDrop = true;
 			this.movieListGrid1.AllowUserToAddRows = false;
 			this.movieListGrid1.AllowUserToDeleteRows = false;
+			this.movieListGrid1.AllowUserToOrderColumns = true;
+			this.movieListGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.movieListGrid1.BoldCount = 8;
 			this.movieListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.movieListGrid1.Location = new System.Drawing.Point(25, 81);
+			this.movieListGrid1.Location = new System.Drawing.Point(12, 287);
 			this.movieListGrid1.Name = "movieListGrid1";
 			this.movieListGrid1.RowTemplate.Height = 21;
-			this.movieListGrid1.Size = new System.Drawing.Size(819, 243);
+			this.movieListGrid1.Size = new System.Drawing.Size(729, 213);
 			this.movieListGrid1.TabIndex = 3;
+			this.movieListGrid1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.movieListGrid1_CellContentClick);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(13, 266);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(83, 12);
+			this.label2.TabIndex = 7;
+			this.label2.Text = "ボールドのコマ数";
+			// 
+			// numBold
+			// 
+			this.numBold.Location = new System.Drawing.Point(103, 262);
+			this.numBold.Name = "numBold";
+			this.numBold.Size = new System.Drawing.Size(50, 19);
+			this.numBold.TabIndex = 8;
+			this.numBold.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numBold.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			// 
+			// tbInfo
+			// 
+			this.tbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tbInfo.Location = new System.Drawing.Point(160, 262);
+			this.tbInfo.Name = "tbInfo";
+			this.tbInfo.Size = new System.Drawing.Size(581, 19);
+			this.tbInfo.TabIndex = 9;
+			// 
+			// printInfoPanel1
+			// 
+			this.printInfoPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.printInfoPanel1.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+			this.printInfoPanel1.Location = new System.Drawing.Point(15, 75);
+			this.printInfoPanel1.MaximumSize = new System.Drawing.Size(0, 185);
+			this.printInfoPanel1.MinimumSize = new System.Drawing.Size(0, 185);
+			this.printInfoPanel1.Name = "printInfoPanel1";
+			this.printInfoPanel1.Size = new System.Drawing.Size(726, 185);
+			this.printInfoPanel1.TabIndex = 10;
+			this.printInfoPanel1.TabStop = false;
+			this.printInfoPanel1.Text = "印刷項目";
 			// 
 			// Form1
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(878, 798);
-			this.Controls.Add(this.listBox1);
+			this.ClientSize = new System.Drawing.Size(753, 512);
+			this.Controls.Add(this.printInfoPanel1);
+			this.Controls.Add(this.tbInfo);
+			this.Controls.Add(this.numBold);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.movieListGrid1);
 			this.Controls.Add(this.toolStrip1);
-			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
 			this.Load += new System.EventHandler(this.Form1_Load);
-			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
-			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numBold)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -222,13 +283,17 @@
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripButton toolStripButton3;
 		private MovieListGrid movieListGrid1;
-		private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.NumericUpDown numBold;
+		private System.Windows.Forms.TextBox tbInfo;
+		private PrintInfoPanel printInfoPanel1;
 	}
 }
 

@@ -51,8 +51,14 @@ namespace MovieListup
 				if (ok) this.Size = sz;
 				Point p = pref.GetPoint("Point", out ok);
 				if (ok) this.Location = p;
+
 			}
+			int w = this.ClientSize.Width - printInfoPanel1.Left * 2;
+			if (printInfoPanel1.Width != w) printInfoPanel1.Width = w;
 			this.Text = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+
+			printInfoPanel1.LoadHis();
+
 		}
 		//-------------------------------------------------------------
 		/// <summary>
@@ -69,35 +75,8 @@ namespace MovieListup
 
 			pref.SetIntArray("IntArray", new int[] { 8, 9, 7 });
 			pref.Save();
+			printInfoPanel1.SaveHis();
 
-		}
-		//-------------------------------------------------------------
-		/// <summary>
-		/// ドラッグ＆ドロップの準備
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form1_DragEnter(object sender, DragEventArgs e)
-		{
-			if (e.Data.GetDataPresent(DataFormats.FileDrop))
-			{
-				e.Effect = DragDropEffects.All;
-			}
-			else
-			{
-				e.Effect = DragDropEffects.None;
-			}
-		}
-		/// <summary>
-		/// ドラッグ＆ドロップの本体
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form1_DragDrop(object sender, DragEventArgs e)
-		{
-			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-			//ここでは単純にファイルをリストアップするだけ
-			GetCommand(files);
 		}
 		//-------------------------------------------------------------
 		/// <summary>
@@ -106,15 +85,7 @@ namespace MovieListup
 		/// <param name="cmd"></param>
 		public void GetCommand(string[] cmd)
 		{
-			listBox1.Items.Clear();
-			if (cmd.Length > 0)
-			{
-				foreach (string s in cmd)
-				{
-					MovieInfo mi = new MovieInfo(s);
-					listBox1.Items.Add(mi.InfoStr());
-				}
-			}
+			movieListGrid1.AddMovies(cmd);
 		}
 		/// <summary>
 		/// メニューの終了
@@ -134,41 +105,18 @@ namespace MovieListup
 		private void button1_Click(object sender, EventArgs e)
 		{
 
-			JsonPref j = new JsonPref();
-
-			int[] aaa = new int[] { 78, 9, 12 };
-			double[] bbb = new double[] { 0.7, 0.01, 0.12 };
-			string[] ccc = new string[] { "eee", "sfskjbF", "13" };
-			j.SetIntArray("aa", aaa);
-			j.SetDoubleArray("bb", bbb);
-			j.SetStringArray("cc", ccc);
-
-			MessageBox.Show(j.ToJson());
+		
 
 		}
 
+		private void button1_Click_1(object sender, EventArgs e)
+		{
+			//movieListGrid1.AddMovie(null);
+		}
 
-		/*
-private void button1_Click(object sender, EventArgs e)
-{
-	dynamic a = new DynamicJson();
-	a.fff = new string[] { "a", "B" };
-	a.fff = "12";
-	//a.fff = new { aaa=12, ccc="www" };
+		private void movieListGrid1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
 
-	MessageBox.Show(a.fff.GetType().ToString());
-
-	JsonPref s = new JsonPref();
-	s.AddInt("aaa", 99);
-	string ss = s.ToJson();
-	MessageBox.Show(ss);
-	s.Parse(ss);
-	string sss = s.ToJson();
-	MessageBox.Show(sss);
-
-	int i = s.GetInt("aaa");
-	MessageBox.Show(String.Format("{0}", i));
-}
-*/
+		}
 	}
 }
