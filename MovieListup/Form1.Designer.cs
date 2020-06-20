@@ -44,15 +44,15 @@
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.label1 = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.movieListGrid1 = new MovieListup.MovieListGrid();
 			this.label2 = new System.Windows.Forms.Label();
 			this.numBold = new System.Windows.Forms.NumericUpDown();
 			this.tbInfo = new System.Windows.Forms.TextBox();
 			this.printInfoPanel1 = new MovieListup.PrintInfoPanel();
+			this.movieListGrid1 = new MovieListup.MovieListGrid();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numBold)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -63,7 +63,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(753, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(790, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -132,7 +132,7 @@
             this.toolStripButton3});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(753, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(790, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -175,26 +175,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(67, 50);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(674, 19);
+			this.textBox1.Size = new System.Drawing.Size(711, 19);
 			this.textBox1.TabIndex = 5;
-			// 
-			// movieListGrid1
-			// 
-			this.movieListGrid1.AllowDrop = true;
-			this.movieListGrid1.AllowUserToAddRows = false;
-			this.movieListGrid1.AllowUserToDeleteRows = false;
-			this.movieListGrid1.AllowUserToOrderColumns = true;
-			this.movieListGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.movieListGrid1.BoldCount = 8;
-			this.movieListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.movieListGrid1.Location = new System.Drawing.Point(12, 287);
-			this.movieListGrid1.Name = "movieListGrid1";
-			this.movieListGrid1.RowTemplate.Height = 21;
-			this.movieListGrid1.Size = new System.Drawing.Size(729, 213);
-			this.movieListGrid1.TabIndex = 3;
-			this.movieListGrid1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.movieListGrid1_CellContentClick);
 			// 
 			// label2
 			// 
@@ -224,7 +206,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tbInfo.Location = new System.Drawing.Point(160, 262);
 			this.tbInfo.Name = "tbInfo";
-			this.tbInfo.Size = new System.Drawing.Size(581, 19);
+			this.tbInfo.Size = new System.Drawing.Size(618, 19);
 			this.tbInfo.TabIndex = 9;
 			// 
 			// printInfoPanel1
@@ -233,20 +215,41 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.printInfoPanel1.Font = new System.Drawing.Font("MS UI Gothic", 12F);
 			this.printInfoPanel1.Location = new System.Drawing.Point(15, 75);
-			this.printInfoPanel1.MaximumSize = new System.Drawing.Size(0, 185);
-			this.printInfoPanel1.MinimumSize = new System.Drawing.Size(0, 185);
 			this.printInfoPanel1.Name = "printInfoPanel1";
-			this.printInfoPanel1.Size = new System.Drawing.Size(726, 185);
+			this.printInfoPanel1.PCampany = "";
+			this.printInfoPanel1.PDate = "";
+			this.printInfoPanel1.PMemo1 = "";
+			this.printInfoPanel1.PMemo2 = "";
+			this.printInfoPanel1.PTitle = "";
+			this.printInfoPanel1.Size = new System.Drawing.Size(763, 185);
 			this.printInfoPanel1.TabIndex = 10;
 			this.printInfoPanel1.TabStop = false;
 			this.printInfoPanel1.Text = "印刷項目";
+			// 
+			// movieListGrid1
+			// 
+			this.movieListGrid1.AllowDrop = true;
+			this.movieListGrid1.AllowUserToAddRows = false;
+			this.movieListGrid1.AllowUserToDeleteRows = false;
+			this.movieListGrid1.AllowUserToOrderColumns = true;
+			this.movieListGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.movieListGrid1.BoldCount = 8;
+			this.movieListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.movieListGrid1.Location = new System.Drawing.Point(12, 287);
+			this.movieListGrid1.Name = "movieListGrid1";
+			this.movieListGrid1.RowTemplate.Height = 21;
+			this.movieListGrid1.Size = new System.Drawing.Size(766, 203);
+			this.movieListGrid1.TabIndex = 3;
+			this.movieListGrid1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.movieListGrid1_CellContentClick);
 			// 
 			// Form1
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(753, 512);
+			this.ClientSize = new System.Drawing.Size(790, 502);
 			this.Controls.Add(this.printInfoPanel1);
 			this.Controls.Add(this.tbInfo);
 			this.Controls.Add(this.numBold);
@@ -266,8 +269,8 @@
 			this.menuStrip1.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numBold)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.movieListGrid1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

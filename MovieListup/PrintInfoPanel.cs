@@ -37,13 +37,60 @@ namespace MovieListup
 
 		private Button m_BtnDate = new Button();
 
+		private string GetCombText(int idx)
+		{
+			string ret = "";
+			if ((idx < 0) || (idx > 5)) return ret;
+			if (m_Combs[idx] != null)
+			{
+				ret =  m_Combs[idx].Text;
+			}
+			return ret;
+		}
+		private void SetCombText(int idx,string s)
+		{
+			if ((idx < 0) || (idx > 5)) return;
+			if (m_Combs[idx] != null)
+			{
+				if (m_Combs[idx].Text != s)
+				{
+					m_Combs[idx].Text = s;
+					HistryPushComb(m_Combs[idx]);
+				}
+			}
+		}
+		public string PTitle
+		{
+			get{ return GetCombText(0); }
+			set{ SetCombText(0, value); }
+		}
+
+		public string PMemo1
+		{
+			get{ return GetCombText(1); }
+			set{ SetCombText(1, value); }
+		}
+		public string PMemo2
+		{
+			get{ return GetCombText(2); }
+			set{ SetCombText(2, value); }
+		}
+		public string PDate
+		{
+			get{ return GetCombText(3); }
+			set{ SetCombText(3, value); }
+		}
+		public string PCampany
+		{
+			get{ return GetCombText(4); }
+			set{ SetCombText(4, value); }
+		}
+
 		public PrintInfoPanel()
 		{
 			Font f =new Font(this.Font.FontFamily,12);
 			this.Font = f;
 			int h = m_TopHeight + m_BottomHeight + m_RowHeight * 5;
-			this.MinimumSize = new Size(0,h);
-			this.MaximumSize = new Size(0,h);
 
 			this.Size = new Size(m_SideWidth*2 + m_LabelWidth + m_CombWidth, h);
 
@@ -63,6 +110,10 @@ namespace MovieListup
 			m_BtnDate.Location = new Point(m_Combs[3].Left + m_Combs[3].Width + 5, m_Combs[3].Top);
 			m_BtnDate.Click += M_BtnDate_Click;
 			this.Controls.Add(m_BtnDate);
+			this.SetStyle(ControlStyles.DoubleBuffer, true);
+			this.SetStyle(ControlStyles.UserPaint, true);
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
 
 		}
 
@@ -158,6 +209,7 @@ namespace MovieListup
 		}
 		private void HistryPushComb(ComboBox cmb)
 		{
+			if (cmb == null) return;
 			string s = cmb.Text.Trim();
 			if (s == "") return;
 
@@ -180,6 +232,7 @@ namespace MovieListup
 		}
 		private string[] CombToArray(ComboBox cmb)
 		{
+			if (cmb == null) return new string[0];
 			int cnt = cmb.Items.Count;
 			string[] ret = new string[cnt];
 			if(cnt>0)
@@ -237,6 +290,7 @@ namespace MovieListup
 		}
 		private void CombFromObj(ComboBox cmb,dynamic obj,string key1,string key2)
 		{
+			if (cmb == null) return;
 			if (obj.IsDefined(key1) == true)
 			{
 				cmb.Text = obj[key1];
